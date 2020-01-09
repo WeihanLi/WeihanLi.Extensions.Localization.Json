@@ -1,0 +1,1 @@
+# WeihanLi.Extensions.Localization.Json

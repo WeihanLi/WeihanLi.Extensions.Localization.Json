@@ -1,0 +1,18 @@
+<Project>
+  <Import Project="./document.props" />
+  <PropertyGroup>
+    <PackageId>WeihanLi.Extensions.Localization.Json</PackageId>
+    <Title>WeihanLi.Extensions.Localization.Json</Title>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>WeihanLi.Extensions.Localization.Json</Description>
+    <PackageTags>localization</PackageTags>
+    <PackageSummary>WeihanLi.Extensions.Localization.Json</PackageSummary>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes>
+      https://github.com/WeihanLi/WeihanLi.Extensions.Localization.Json/tree/dev/docs/ReleaseNotes.md
+    </PackageReleaseNotes>
+    <PackageIconUrl>https://avatars3.githubusercontent.com/u/7604648</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/WeihanLi/WeihanLi.Extensions.Localization.Json/tree/dev/src/WeihanLi.Extensions.Localization.Json</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+</Project>
