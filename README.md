@@ -71,6 +71,22 @@ for example:
 - Resources/en/Views/Home/Index.json
 - Resources/zh/Views/Home/Index.json
 
+**Copy your resource files to output:**
+
+you had to set resource files copy to output to make it works normal
+
+add the follows sample config to your startup project file:
+
+``` xml
+<ItemGroup>
+<Content Update="Resources\**\*.json">
+    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+</Content>
+</ItemGroup>
+```
+
+the config above is made to make sure your json resource files in `Resources` dir copied to output, change it if you need
+
 ## Use
 
 just like what you do before:
