@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeihanLi.Extensions.Localiz
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{E465218D-7252-4FEF-B503-C00A761BF583}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeihanLi.Extensions.Localization.Json.Samples", "samples\WeihanLi.Extensions.Localization.Json.Samples\WeihanLi.Extensions.Localization.Json.Samples.csproj", "{A97D9AD9-0B7E-4C1C-9B90-D9F0D3CEB8F2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeihanLi.Extensions.Localization.Json.Sample", "samples\WeihanLi.Extensions.Localization.Json.Sample\WeihanLi.Extensions.Localization.Json.Sample.csproj", "{A97D9AD9-0B7E-4C1C-9B90-D9F0D3CEB8F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

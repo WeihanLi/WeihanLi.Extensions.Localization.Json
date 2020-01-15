@@ -47,6 +47,13 @@ namespace WeihanLi.Extensions.Localization.Json
             }
 
             services.Configure(setupAction);
+            services.PostConfigure<JsonLocalizationOptions>(options =>
+            {
+                if (options.ResourcesPath == null)
+                {
+                    options.ResourcesPath = "Resources";
+                }
+            });
             AddJsonLocalization(services);
 
             return services;

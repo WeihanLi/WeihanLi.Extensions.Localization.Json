@@ -23,22 +23,47 @@ namespace WeihanLi.Extensions.Localization.Json
 
         public IStringLocalizer Create(Type resourceSource)
         {
-            return new JsonStringLocalizer(_localizationOptions, TrimStart(ApplicationHelper.AppRoot, resourceSource.FullName));
+            if (resourceSource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceSource));
+            }
+            var resourceName = TrimPrefix(resourceSource.FullName, ApplicationHelper.ApplicationName + ".");
+            return CreateJsonStringLocalizer(resourceName);
         }
 
         public IStringLocalizer Create(string baseName, string location)
         {
-            return new JsonStringLocalizer(_localizationOptions, TrimStart(location, baseName));
-        }
-
-        private static string TrimStart(string str, string start)
-        {
-            if (str?.StartsWith(start, StringComparison.Ordinal) == true)
+            if (baseName == null)
             {
-                return str.Substring(start.Length);
+                throw new ArgumentNullException(nameof(baseName));
             }
 
-            return str;
+            if (location == null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+
+            var resourceName = TrimPrefix(baseName, location + ".");
+            return CreateJsonStringLocalizer(resourceName);
+        }
+
+        private JsonStringLocalizer CreateJsonStringLocalizer(string resourceName)
+        {
+            var logger = _loggerFactory.CreateLogger<JsonStringLocalizer>();
+            return _localizerCache.GetOrAdd(resourceName, resName => new JsonStringLocalizer(
+                _localizationOptions,
+                resName,
+                logger));
+        }
+
+        private static string TrimPrefix(string name, string prefix)
+        {
+            if (name.StartsWith(prefix, StringComparison.Ordinal))
+            {
+                return name.Substring(prefix.Length);
+            }
+
+            return name;
         }
     }
 }

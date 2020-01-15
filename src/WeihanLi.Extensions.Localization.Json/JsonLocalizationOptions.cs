@@ -7,10 +7,13 @@
         /// </summary>
         public string ResourcesPath { get; set; } = "Resources";
 
-        public ResourcesType ResourcesType { get; set; }
+        /// <summary>
+        /// ResourcesPathType
+        /// </summary>
+        public ResourcesPathType ResourcesPathType { get; set; }
     }
 
-    public enum ResourcesType
+    public enum ResourcesPathType
     {
         TypeBased = 0,
         CultureBased = 1,
