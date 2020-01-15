@@ -27,7 +27,7 @@ namespace WeihanLi.Extensions.Localization.Json
             {
                 throw new ArgumentNullException(nameof(resourceSource));
             }
-            var resourceName = TrimPrefix(resourceSource.FullName, ApplicationHelper.ApplicationName + ".");
+            var resourceName = TrimPrefix(resourceSource.FullName, (_localizationOptions.RootNamespace ?? ApplicationHelper.ApplicationName) + ".");
             return CreateJsonStringLocalizer(resourceName);
         }
 
