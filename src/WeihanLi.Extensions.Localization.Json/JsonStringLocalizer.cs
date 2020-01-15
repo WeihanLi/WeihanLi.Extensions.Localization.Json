@@ -1,27 +1,20 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using Microsoft.Extensions.Localization;
+using WeihanLi.Common.Helpers;
 
 namespace WeihanLi.Extensions.Localization.Json
 {
     internal class JsonStringLocalizer : IStringLocalizer
     {
-        private readonly Dictionary<string, string> _dic;
+        private readonly ConcurrentDictionary<string, Dictionary<string, string>> _dic = new ConcurrentDictionary<string, Dictionary<string, string>>();
 
-        public JsonStringLocalizer(string path)
+        public JsonStringLocalizer(JsonLocalizationOptions localizationOptions, string resourceName)
         {
-            var content = File.ReadAllText(path);
-            if (string.IsNullOrEmpty(content))
-            {
-                _dic = new Dictionary<string, string>();
-            }
-            else
-            {
-                _dic = content.JsonToType<Dictionary<string, object>>().ToDictionary(x => x.Key, x => x.Value.ToString());
-            }
+            var path = Path.Combine(ApplicationHelper.AppRoot, localizationOptions.ResourcesPath, resourceName);
         }
 
         public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures)
