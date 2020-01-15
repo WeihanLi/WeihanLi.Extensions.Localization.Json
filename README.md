@@ -1,8 +1,12 @@
-# WeihanLi.Extensions.Localization.Json
+# WeihanLi.Extensions.Localization.Json [![WeihanLi.Extensions.Localization.Json](https://img.shields.io/nuget/v/WeihanLi.Extensions.Localization.Json.svg)](https://www.nuget.org/packages/WeihanLi.Extensions.Localization.Json/)
 
 ## Intro
 
-Json file based localization
+dotnet core json file based localization
+
+## Build
+
+[![Build Status](https://weihanli.visualstudio.com/Pipelines/_apis/build/status/WeihanLi.WeihanLi.Extensions.Localization.Json?branchName=dev)](https://weihanli.visualstudio.com/Pipelines/_build/latest?definitionId=25&branchName=dev)
 
 ## GetStarted
 
