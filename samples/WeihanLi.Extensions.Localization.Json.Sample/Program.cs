@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace WeihanLi.Extensions.Localization.Json.Samples
+namespace WeihanLi.Extensions.Localization.Json.Sample
 {
     public class Program
     {

@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace WeihanLi.Extensions.Localization.Json.Samples
+namespace WeihanLi.Extensions.Localization.Json.Sample
 {
     public class Startup
     {
@@ -46,9 +46,12 @@ namespace WeihanLi.Extensions.Localization.Json.Samples
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme);
 
             services.AddControllersWithViews()
-                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix,
-                    opts => { opts.ResourcesPath = Configuration.GetAppSetting("ResourcesPath"); })
-                .AddDataAnnotationsLocalization();
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix, opts =>
+                {
+                    opts.ResourcesPath = Configuration.GetAppSetting("ResourcesPath");
+                })
+                .AddDataAnnotationsLocalization()
+                ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,14 +71,10 @@ namespace WeihanLi.Extensions.Localization.Json.Samples
 
             app.UseRouting();
 
-            app.UseAuthentication();
-            app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllers();
+                endpoints.MapDefaultControllerRoute();
             });
         }
     }
