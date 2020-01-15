@@ -10,7 +10,7 @@ using WeihanLi.Common.Helpers;
 
 namespace WeihanLi.Extensions.Localization.Json
 {
-    public class JsonStringLocalizer : IStringLocalizer
+    internal class JsonStringLocalizer : IStringLocalizer
     {
         private readonly ConcurrentDictionary<string, Dictionary<string, string>> _resourcesCache = new ConcurrentDictionary<string, Dictionary<string, string>>();
         private readonly string _resourcesPath;
