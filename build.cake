@@ -6,7 +6,6 @@ var target = Argument("target", "Default");
 var configuration = Argument("configuration", "Release");
 var stable = Argument("stable", "false");
 
-var solutionPath = "./WeihanLi.Extensions.Localization.Json.sln";
 var srcProjects  = GetFiles("./src/**/*.csproj");
 var packProjects = GetFiles("./src/**/*.csproj");
 var testProjects  = GetFiles("./test/**/*.csproj");
@@ -88,7 +87,7 @@ Task("test")
     .Does(() =>
     {
       var testSettings = new DotNetCoreTestSettings{
-         NoRestore = true,
+         NoRestore = false,
          Configuration = configuration
       };
       foreach(var project in testProjects)
@@ -120,7 +119,8 @@ Task("pack")
       PublishArtifacts(ctx);
     });
 
-bool PublishArtifacts(context){
+bool PublishArtifacts(ICakeContext context)
+{
    if(context.Environment.Platform.IsUnix())
    {
       return false;
