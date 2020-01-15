@@ -6,7 +6,9 @@ dotnet core json file based localization
 
 ## Build
 
-[![Build Status](https://weihanli.visualstudio.com/Pipelines/_apis/build/status/WeihanLi.WeihanLi.Extensions.Localization.Json?branchName=dev)](https://weihanli.visualstudio.com/Pipelines/_build/latest?definitionId=25&branchName=dev)
+[![AzureDevOps Build Status](https://weihanli.visualstudio.com/Pipelines/_apis/build/status/WeihanLi.WeihanLi.Extensions.Localization.Json?branchName=dev)](https://weihanli.visualstudio.com/Pipelines/_build/latest?definitionId=25&branchName=dev)
+
+[![Github Build Status](https://github.com/WeihanLi/WeihanLi.Npoi/workflows/dotnetcore/badge.svg?branch=dev)](https://github.com/WeihanLi/WeihanLi.Npoi/actions?query=workflow%3Adotnetcore+branch%3Adev)
 
 ## GetStarted
 
