@@ -11,6 +11,12 @@
         /// ResourcesPathType
         /// </summary>
         public ResourcesPathType ResourcesPathType { get; set; }
+
+        /// <summary>
+        /// RootNamespace
+        /// use entry assembly name by default
+        /// </summary>
+        public string RootNamespace { get; set; }
     }
 
     public enum ResourcesPathType

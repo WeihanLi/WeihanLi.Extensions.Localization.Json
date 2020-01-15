@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -10,7 +11,7 @@ using WeihanLi.Common.Helpers;
 
 namespace WeihanLi.Extensions.Localization.Json
 {
-    public class JsonStringLocalizer : IStringLocalizer
+    internal class JsonStringLocalizer : IStringLocalizer
     {
         private readonly ConcurrentDictionary<string, Dictionary<string, string>> _resourcesCache = new ConcurrentDictionary<string, Dictionary<string, string>>();
         private readonly string _resourcesPath;
@@ -41,7 +42,6 @@ namespace WeihanLi.Extensions.Localization.Json
                 }
 
                 var value = GetStringSafely(name);
-
                 return new LocalizedString(name, value ?? name, resourceNotFound: value == null, searchedLocation: _searchedLocation);
             }
         }
@@ -57,7 +57,6 @@ namespace WeihanLi.Extensions.Localization.Json
 
                 var format = GetStringSafely(name);
                 var value = string.Format(format ?? name, arguments);
-
                 return new LocalizedString(name, value, resourceNotFound: format == null, searchedLocation: _searchedLocation);
             }
         }
@@ -92,12 +91,10 @@ namespace WeihanLi.Extensions.Localization.Json
                 throw new ArgumentNullException(nameof(name));
             }
 
-            var culture = CultureInfo.CurrentUICulture;
             string value = null;
 
-            BuildResourcesCache(culture.Name);
-
-            if (_resourcesCache.TryGetValue(culture.Name, out var resources) && resources?.ContainsKey(name) == true)
+            var resources = GetResources(CultureInfo.CurrentUICulture.Name);
+            if (resources?.ContainsKey(name) == true)
             {
                 value = resources[name];
             }
@@ -130,24 +127,13 @@ namespace WeihanLi.Extensions.Localization.Json
 
         private IEnumerable<string> GetAllResourceStrings(CultureInfo culture)
         {
-            BuildResourcesCache(culture.Name);
-
-            if (_resourcesCache.TryGetValue(culture.Name, out var resources))
-            {
-                foreach (var resource in resources)
-                {
-                    yield return resource.Key;
-                }
-            }
-            else
-            {
-                yield return null;
-            }
+            var resources = GetResources(culture.Name);
+            return resources?.Select(r => r.Key);
         }
 
-        private void BuildResourcesCache(string culture)
+        private Dictionary<string, string> GetResources(string culture)
         {
-            _resourcesCache.GetOrAdd(culture, _ =>
+            return _resourcesCache.GetOrAdd(culture, _ =>
             {
                 var resourceFile = "json";
                 if (_resourcesPathType == ResourcesPathType.TypeBased)
@@ -169,7 +155,7 @@ namespace WeihanLi.Extensions.Localization.Json
 
                 if (File.Exists(_searchedLocation))
                 {
-                    var content = File.ReadAllText(_searchedLocation);
+                    var content = File.ReadAllText(_searchedLocation, System.Text.Encoding.UTF8);
                     if (!string.IsNullOrWhiteSpace(content))
                     {
                         try
