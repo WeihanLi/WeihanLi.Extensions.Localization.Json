@@ -155,7 +155,7 @@ namespace WeihanLi.Extensions.Localization.Json
 
                 if (File.Exists(_searchedLocation))
                 {
-                    var content = File.ReadAllText(_searchedLocation);
+                    var content = File.ReadAllText(_searchedLocation, System.Text.Encoding.UTF8);
                     if (!string.IsNullOrWhiteSpace(content))
                     {
                         try
