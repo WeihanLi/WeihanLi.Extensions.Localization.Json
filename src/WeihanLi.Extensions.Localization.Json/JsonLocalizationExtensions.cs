@@ -20,7 +20,7 @@ namespace WeihanLi.Extensions.Localization.Json
             }
 
             services.AddOptions();
-
+            services.AddLogging();
             services.TryAddSingleton<IStringLocalizerFactory, JsonStringLocalizerFactory>();
             services.TryAddTransient(typeof(IStringLocalizer<>), typeof(StringLocalizer<>));
 
