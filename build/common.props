@@ -5,7 +5,7 @@
     <Title>WeihanLi.Extensions.Localization.Json</Title>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Description>WeihanLi.Extensions.Localization.Json</Description>
-    <PackageTags>localization</PackageTags>
+    <PackageTags>localization,json</PackageTags>
     <PackageSummary>WeihanLi.Extensions.Localization.Json</PackageSummary>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes>

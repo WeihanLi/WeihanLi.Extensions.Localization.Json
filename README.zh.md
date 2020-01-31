@@ -2,7 +2,7 @@
 
 ## Intro
 
-dotnet core json file based localization
+dotnet core 基于 json 的本地化组件
 
 ## Build
 
@@ -12,18 +12,18 @@ dotnet core json file based localization
 
 ## GetStarted
 
-register required services:
+注册服务：
 
 ``` csharp
 services.AddJsonLocalization(options =>
     {
         options.ResourcesPath = Configuration.GetAppSetting("ResourcesPath");
-        options.ResourcesPathType = ResourcesPathType.TypeBased; // by default, looking for resourceFile like Microsoft do
-        // options.ResourcesPathType = ResourcesPathType.CultureBased; // looking for resource file in culture sub dir see details follows
+        options.ResourcesPathType = ResourcesPathType.TypeBased; // 默认方式和微软找资源的方式类似
+        // options.ResourcesPathType = ResourcesPathType.CultureBased; // 在对应的 culture 子目录下寻找资源文件，可以参考后面的示例
     });
 ```
 
-middleware config(the same with before):
+中间件配置(如果是asp.net core，和之前一样):
 
 ``` csharp
 app.UseRequestLocalization();
@@ -31,57 +31,55 @@ app.UseRequestLocalization();
 
 That's it~
 
-## Add your resource files
+## 添加你的资源文件
 
-### TypeBasedResourcePath
+### TypeBased 资源文件的路径
 
 **For Types:**
 
 `Home/Index` => Controllers/HomeController
 
-the resource path looking for:
+资源路径：
 
-- Controllers/HomeController.[cultureName].json
+- [ResourcesPath]/Controllers/HomeController.[cultureName].json
 
-for example:
+示例:
 
 - Resources/Controllers/HomeController.en.json
 - Resources/Controllers/HomeController.zh.json
 
-**For RazorViews:**
+**For Razor 视图:**
 
-for example:
+示例:
 
 - Resources/Views/Home/Index.en.json
 - Resources/Views/Home/Index.zh.json
 
-### CultureBasedResourcePath
+### CultureBased 资源文件路径
 
 **For Types:**
 
 `Home/Index` => Controllers/HomeController
 
-the resource path looking for:
+资源路径:
 
-- Resources/[cultureName]/Controllers/HomeController.json
+- [ResourcesPath]/[cultureName]/Controllers/HomeController.json
 
-for example:
+示例：
 
 - Resources/en/Controllers/HomeController.json
 - Resources/zh/Controllers/HomeController.json
 
-**For RazorViews:**
+**For Razor 视图:**
 
-for example:
+示例：
 
 - Resources/en/Views/Home/Index.json
 - Resources/zh/Views/Home/Index.json
 
 **Copy your resource files to output:**
 
-you had to set resource files copy to output to make it works normal
-
-add the follows sample config to your startup project file:
+需要设置将资源文件拷贝到输出目录，否则会找不到资源文件，可以在启动项目项目文件中加入以下示例代码：
 
 ``` xml
 <ItemGroup>
@@ -91,13 +89,13 @@ add the follows sample config to your startup project file:
 </ItemGroup>
 ```
 
-the config above is made to make sure your json resource files in `Resources` dir copied to output, change it if you need
+上面的配置会将 `Resources` 目录下的所有 json 文件拷贝到输出目录下，可以根据自己的需要进行修改
 
 ## Use
 
-just like what you do before:
+用法和之前是一样的
 
-Controller sample:
+Controller 示例：
 
 ``` chsarp
 public class ValuesController : Controller
@@ -118,7 +116,7 @@ public class ValuesController : Controller
 }
 ```
 
-Razor View Sample:
+Razor 视图示例：
 
 ``` razor
 @using Microsoft.AspNetCore.Mvc.Localization
@@ -140,11 +138,11 @@ Razor View Sample:
 <div>view: @ViewLocalizer["Hello"]</div>
 ```
 
-Resource file sample:
+资源文件示例：
 
 ``` json
 {
-  "Culture": "English"
+  "Culture": "中文"
 }
 ```
 
