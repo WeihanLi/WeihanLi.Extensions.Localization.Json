@@ -2,7 +2,7 @@
 
 ## Intro
 
-dotnet core 基于 json 的本地化组件
+dotnet core 基于 json 的本地化组件，支持基于 culture 的资源路径
 
 ## Build
 

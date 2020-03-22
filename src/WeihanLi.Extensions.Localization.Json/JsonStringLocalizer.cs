@@ -160,7 +160,9 @@ namespace WeihanLi.Extensions.Localization.Json
                     {
                         try
                         {
-                            value = content.Trim().JsonToType<Dictionary<string, string>>();
+                            value = content.Trim()
+                                .JsonToObject<Dictionary<string, string>>()
+                                ;
                         }
                         catch (Exception e)
                         {
