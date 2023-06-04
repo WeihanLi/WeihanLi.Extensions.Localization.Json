@@ -50,6 +50,7 @@ namespace WeihanLi.Extensions.Localization.Json
         private JsonStringLocalizer CreateJsonStringLocalizer(string resourceName)
         {
             var logger = _loggerFactory.CreateLogger<JsonStringLocalizer>();
+            System.Console.WriteLine("Looking for resource: {0}", resourceName);
             return _localizerCache.GetOrAdd(resourceName, resName => new JsonStringLocalizer(
                 _localizationOptions,
                 resName,

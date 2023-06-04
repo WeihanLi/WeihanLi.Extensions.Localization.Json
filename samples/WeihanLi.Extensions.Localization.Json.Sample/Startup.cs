@@ -35,20 +35,19 @@ namespace WeihanLi.Extensions.Localization.Json.Sample
                 // UI strings that we have localized.
                 options.SupportedUICultures = supportedCultures;
             });
-            // services.AddLocalization(options => options.ResourcesPath = Configuration.GetAppSetting("ResourcesPath"));
+            var resourcesPath = Configuration.GetAppSetting("ResourcesPath") ?? "Resources";
             services.AddJsonLocalization(options =>
                 {
-                    options.ResourcesPath = Configuration.GetAppSetting("ResourcesPath");
-                    options.ResourcesPathType = ResourcesPathType.CultureBased;
+                    options.ResourcesPath = resourcesPath;
+                    options.ResourcesPathType = ResourcesPathType.TypeBased;
                 });
-
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme);
 
             services.AddControllersWithViews()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix, opts =>
                 {
-                    opts.ResourcesPath = Configuration.GetAppSetting("ResourcesPath");
+                    opts.ResourcesPath = resourcesPath;
                 })
                 .AddDataAnnotationsLocalization()
                 ;

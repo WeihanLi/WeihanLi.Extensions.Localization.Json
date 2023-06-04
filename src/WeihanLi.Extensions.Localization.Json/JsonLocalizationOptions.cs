@@ -1,6 +1,6 @@
 ﻿namespace WeihanLi.Extensions.Localization.Json
 {
-    public class JsonLocalizationOptions
+    public sealed class JsonLocalizationOptions
     {
         /// <summary>
         /// The relative path under application root where resource files are located.
@@ -14,14 +14,26 @@
 
         /// <summary>
         /// RootNamespace
-        /// use entry assembly name by default
+        /// Use the entry assembly name by default
         /// </summary>
         public string RootNamespace { get; set; }
+
+        /// <summary>
+        /// JsonSerializerType
+        /// Use system text json by default
+        /// </summary>
+        public JsonSerializerType JsonSerializerType { get; set; }
     }
 
     public enum ResourcesPathType
     {
         TypeBased = 0,
         CultureBased = 1,
+    }
+
+    public enum JsonSerializerType
+    {
+        SystemTextJson = 0,
+        NewtonsoftJson = 1
     }
 }

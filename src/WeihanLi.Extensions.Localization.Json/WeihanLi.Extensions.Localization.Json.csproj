@@ -1,9 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="../../build/common.props" />
   <ItemGroup>
-    <PackageReference Include="WeihanLi.Common" Version="1.0.47" />
+    <PackageReference Include="WeihanLi.Common" Version="1.0.59" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Version="2.1.0" Include="Microsoft.Extensions.Localization.Abstractions" />
+    <PackageReference Condition="'$(TargetFramework)'=='netstandard2.0'" Version="2.1.0" Include="Microsoft.Extensions.Localization.Abstractions" />
+    <PackageReference Condition="'$(TargetFramework)'=='net6.0'" Version="6.0.0" Include="Microsoft.Extensions.Localization.Abstractions" />
+    <PackageReference Condition="'$(TargetFramework)'=='netstandard2.0'" Version="6.0.0" Include="System.Text.Json" />
   </ItemGroup>
 </Project>

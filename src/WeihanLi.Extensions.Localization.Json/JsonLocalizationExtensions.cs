@@ -21,8 +21,8 @@ namespace WeihanLi.Extensions.Localization.Json
 
             services.AddOptions();
             services.AddLogging();
-            services.TryAddSingleton<IStringLocalizerFactory, JsonStringLocalizerFactory>();
             services.TryAddTransient(typeof(IStringLocalizer<>), typeof(StringLocalizer<>));
+            services.TryAddSingleton<IStringLocalizerFactory, JsonStringLocalizerFactory>();
 
             return services;
         }
@@ -47,13 +47,7 @@ namespace WeihanLi.Extensions.Localization.Json
             }
 
             services.Configure(setupAction);
-            services.PostConfigure<JsonLocalizationOptions>(options =>
-            {
-                if (options.ResourcesPath == null)
-                {
-                    options.ResourcesPath = "Resources";
-                }
-            });
+            services.PostConfigure<JsonLocalizationOptions>(options => { options.ResourcesPath ??= "Resources"; });
             AddJsonLocalization(services);
 
             return services;

@@ -2,12 +2,9 @@
   <Import Project="./build/sign.props" />
 
   <PropertyGroup>
-		<VersionMajor>1</VersionMajor>
+		<VersionMajor>2</VersionMajor>
 		<VersionMinor>0</VersionMinor>
-		<VersionPatch>4</VersionPatch>
-		<VersionRevision>0</VersionRevision>
-		<VersionPrefix Condition="'$(VersionRevision)'=='0'">$(VersionMajor).$(VersionMinor).$(VersionPatch)</VersionPrefix>
-    <VersionPrefix Condition="'$(VersionRevision)'!='0'">$(VersionMajor).$(VersionMinor).$(VersionPatch).$(VersionRevision)</VersionPrefix>
+		<VersionPatch>0</VersionPatch>
 		<VersionPrefix>$(VersionMajor).$(VersionMinor).$(VersionPatch)</VersionPrefix>
 		<VersionSuffix Condition="'$(Configuration)'=='DEBUG'">preview</VersionSuffix>
 	</PropertyGroup>
@@ -24,7 +21,7 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
     <Authors>WeihanLi</Authors>
-    <Copyright>Copyright 2019-2021 (c) WeihanLi</Copyright>
+    <Copyright>Copyright 2019-2023 (c) WeihanLi</Copyright>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>

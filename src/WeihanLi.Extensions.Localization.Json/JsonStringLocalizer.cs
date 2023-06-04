@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text.Encodings.Web;
+using System.Text.Json;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -11,10 +13,16 @@ using WeihanLi.Common.Helpers;
 
 namespace WeihanLi.Extensions.Localization.Json
 {
-    internal class JsonStringLocalizer : IStringLocalizer
+    internal sealed class JsonStringLocalizer : IStringLocalizer
     {
-        private readonly ConcurrentDictionary<string, Dictionary<string, string>> _resourcesCache = new ConcurrentDictionary<string, Dictionary<string, string>>();
+        private static readonly JsonSerializerOptions DefaultJsonSerializerOptions = new()
+        {
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+        };
+        
+        private readonly ConcurrentDictionary<string, Dictionary<string, string>> _resourcesCache = new();
         private readonly string _resourcesPath;
+        private readonly JsonLocalizationOptions _localizationOptions;
         private readonly string _resourceName;
         private readonly ResourcesPathType _resourcesPathType;
         private readonly ILogger _logger;
@@ -26,6 +34,7 @@ namespace WeihanLi.Extensions.Localization.Json
             string resourceName,
             ILogger logger)
         {
+            _localizationOptions = localizationOptions;
             _resourceName = resourceName ?? throw new ArgumentNullException(nameof(resourceName));
             _logger = logger ?? NullLogger.Instance;
             _resourcesPath = Path.Combine(ApplicationHelper.AppRoot, localizationOptions.ResourcesPath);
@@ -94,9 +103,9 @@ namespace WeihanLi.Extensions.Localization.Json
             string value = null;
 
             var resources = GetResources(CultureInfo.CurrentUICulture.Name);
-            if (resources?.ContainsKey(name) == true)
+            if (resources?.TryGetValue(name, out var resource) is true)
             {
-                value = resources[name];
+                value = resource;
             }
 
             return value;
@@ -155,19 +164,28 @@ namespace WeihanLi.Extensions.Localization.Json
 
                 if (File.Exists(_searchedLocation))
                 {
-                    var content = File.ReadAllText(_searchedLocation, System.Text.Encoding.UTF8);
-                    if (!string.IsNullOrWhiteSpace(content))
+                    try
                     {
-                        try
+                        if (_localizationOptions.JsonSerializerType == JsonSerializerType.NewtonsoftJson)
                         {
-                            value = content.Trim()
-                                .JsonToObject<Dictionary<string, string>>()
-                                ;
+                            var content = File.ReadAllText(_searchedLocation, System.Text.Encoding.UTF8);
+                            if (!string.IsNullOrWhiteSpace(content))
+                            {
+                                value = content.Trim()
+                                        .JsonToObject<Dictionary<string, string>>()
+                                    ;
+                            
+                            }
                         }
-                        catch (Exception e)
+                        else if (_localizationOptions.JsonSerializerType == JsonSerializerType.SystemTextJson)
                         {
-                            _logger.LogWarning(e, $"invalid json content, path: {_searchedLocation}, content: {content}");
+                            using var stream = File.OpenRead(_searchedLocation);
+                            value = JsonSerializer.Deserialize<Dictionary<string, string>>(stream, DefaultJsonSerializerOptions);
                         }
+                    }
+                    catch (Exception e)
+                    {
+                        _logger.LogError(e, "Failed to get json content, path: {path}, {jsonSerializerType}", _searchedLocation, _localizationOptions.JsonSerializerType);
                     }
                 }
 
