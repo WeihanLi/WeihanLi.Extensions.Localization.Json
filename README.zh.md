@@ -2,13 +2,13 @@
 
 ## Intro
 
-dotnet core 基于 json 的本地化组件，支持基于 culture 的资源路径
+dotnet 基于 json 的本地化组件，支持基于 culture 的资源路径
 
 ## Build
 
 [![AzureDevOps Build Status](https://weihanli.visualstudio.com/Pipelines/_apis/build/status/WeihanLi.WeihanLi.Extensions.Localization.Json?branchName=dev)](https://weihanli.visualstudio.com/Pipelines/_build/latest?definitionId=25&branchName=dev)
 
-[![Github Build Status](https://github.com/WeihanLi/WeihanLi.Npoi/workflows/dotnetcore/badge.svg?branch=dev)](https://github.com/WeihanLi/WeihanLi.Npoi/actions?query=workflow%3Adotnetcore+branch%3Adev)
+[![Github Build Status](https://github.com/WeihanLi/WeihanLi.Extensions.Localization.Json/actions/workflows/dotnet-ci.yml/badge.svg)](https://github.com/WeihanLi/WeihanLi.Extensions.Localization.Json/actions/workflows/dotnet-ci.yml)
 
 ## GetStarted
 
@@ -97,7 +97,7 @@ That's it~
 
 Controller 示例：
 
-``` chsarp
+``` csharp
 public class ValuesController : Controller
 {
     private readonly IStringLocalizer<ValuesController> _localizer;
@@ -148,8 +148,9 @@ Razor 视图示例：
 
 ## Samples
 
-- [AspNetCore3.1Sample](https://github.com/WeihanLi/WeihanLi.Extensions.Localization.Json/tree/dev/samples/WeihanLi.Extensions.Localization.Json.Sample)
-- [ActivityReservation](https://github.com/WeihanLi/ActivityReservation)
+- [AspNetCoreSample](https://github.com/WeihanLi/WeihanLi.Extensions.Localization.Json/tree/dev/samples/WeihanLi.Extensions.Localization.Json.Sample)
+- [Reservation](https://github.com/OpenReservation/ReservationServer)
+- [DbTool](https://github.com/WeihanLi/DbTool)
 
 ## Contact
 

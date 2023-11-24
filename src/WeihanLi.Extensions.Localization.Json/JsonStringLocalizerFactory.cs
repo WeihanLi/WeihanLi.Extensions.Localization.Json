@@ -1,69 +1,55 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using WeihanLi.Common;
 using WeihanLi.Common.Helpers;
 
-namespace WeihanLi.Extensions.Localization.Json
+namespace WeihanLi.Extensions.Localization.Json;
+
+internal sealed class JsonStringLocalizerFactory : IStringLocalizerFactory
 {
-    internal class JsonStringLocalizerFactory : IStringLocalizerFactory
+    private readonly ConcurrentDictionary<string, JsonStringLocalizer> _localizerCache = new();
+    private readonly ILogger _logger;
+    private readonly JsonLocalizationOptions _localizationOptions;
+
+    public JsonStringLocalizerFactory(IOptions<JsonLocalizationOptions> localizationOptions, ILoggerFactory loggerFactory)
     {
-        private readonly ConcurrentDictionary<string, JsonStringLocalizer> _localizerCache =
-            new ConcurrentDictionary<string, JsonStringLocalizer>();
+        _localizationOptions = localizationOptions.Value;
+        _logger = loggerFactory.CreateLogger<JsonStringLocalizer>();
+    }
 
-        private readonly ILoggerFactory _loggerFactory;
-        private readonly JsonLocalizationOptions _localizationOptions;
+    public IStringLocalizer Create(Type resourceSource)
+    {
+        Guard.NotNull(resourceSource);
 
-        public JsonStringLocalizerFactory(IOptions<JsonLocalizationOptions> localizationOptions, ILoggerFactory loggerFactory)
-        {
-            _localizationOptions = localizationOptions.Value;
-            _loggerFactory = loggerFactory;
-        }
+        var resourceName = TrimPrefix(resourceSource.FullName, (_localizationOptions.RootNamespace ?? ApplicationHelper.ApplicationName) + ".");
+        return CreateJsonStringLocalizer(resourceName);
+    }
 
-        public IStringLocalizer Create(Type resourceSource)
-        {
-            if (resourceSource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceSource));
-            }
-            var resourceName = TrimPrefix(resourceSource.FullName, (_localizationOptions.RootNamespace ?? ApplicationHelper.ApplicationName) + ".");
-            return CreateJsonStringLocalizer(resourceName);
-        }
+    public IStringLocalizer Create(string baseName, string location)
+    {
+        Guard.NotNull(baseName);
+        Guard.NotNull(location);
 
-        public IStringLocalizer Create(string baseName, string location)
-        {
-            if (baseName == null)
-            {
-                throw new ArgumentNullException(nameof(baseName));
-            }
+        var resourceName = TrimPrefix(baseName, location + ".");
+        return CreateJsonStringLocalizer(resourceName);
+    }
 
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+    private JsonStringLocalizer CreateJsonStringLocalizer(string resourceName)
+    {
+        _logger.LogInformation("Looking for resource: {resourceName}", resourceName);
+        return _localizerCache.GetOrAdd(resourceName, resName => new JsonStringLocalizer(
+            _localizationOptions,
+            resName,
+            _logger));
+    }
 
-            var resourceName = TrimPrefix(baseName, location + ".");
-            return CreateJsonStringLocalizer(resourceName);
-        }
-
-        private JsonStringLocalizer CreateJsonStringLocalizer(string resourceName)
-        {
-            var logger = _loggerFactory.CreateLogger<JsonStringLocalizer>();
-            return _localizerCache.GetOrAdd(resourceName, resName => new JsonStringLocalizer(
-                _localizationOptions,
-                resName,
-                logger));
-        }
-
-        private static string TrimPrefix(string name, string prefix)
-        {
-            if (name.StartsWith(prefix, StringComparison.Ordinal))
-            {
-                return name.Substring(prefix.Length);
-            }
-
-            return name;
-        }
+    private static string TrimPrefix(string name, string prefix)
+    {
+        return name.StartsWith(prefix, StringComparison.Ordinal) 
+                ? name.Substring(prefix.Length) 
+                : name
+            ;
     }
 }

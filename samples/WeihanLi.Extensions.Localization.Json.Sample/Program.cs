@@ -1,20 +1,48 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
+﻿using System.Globalization;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
+using WeihanLi.Extensions.Localization.Json;
 
-namespace WeihanLi.Extensions.Localization.Json.Sample
+var builder = WebApplication.CreateSlimBuilder(args);
+var services = builder.Services;
+
+var supportedCultures = new[]
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
+    new CultureInfo("zh"),
+    new CultureInfo("en"),
+};
+services.Configure<RequestLocalizationOptions>(options =>
+{
+    options.DefaultRequestCulture = new RequestCulture("zh");
+    // Formatting numbers, dates, etc.
+    options.SupportedCultures = supportedCultures;
+    // UI strings that we have localized.
+    options.SupportedUICultures = supportedCultures;
+});
+var resourcesPath = builder.Configuration.GetAppSetting("ResourcesPath") ?? "Resources";
+services.AddJsonLocalization(options =>
+{
+    options.ResourcesPath = resourcesPath;
+    // options.ResourcesPathType = ResourcesPathType.TypeBased;
+    options.ResourcesPathType = ResourcesPathType.CultureBased;                    
+});
+services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme);
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
-}
+services.AddControllersWithViews()
+    .AddMvcLocalization(options =>
+    {
+        options.ResourcesPath = resourcesPath;
+    }, LanguageViewLocationExpanderFormat.Suffix)
+    ;
+
+var app = builder.Build();
+
+app.UseRequestLocalization();
+app.UseStaticFiles();
+
+app.MapControllers();
+app.MapDefaultControllerRoute();
+
+await app.RunAsync();

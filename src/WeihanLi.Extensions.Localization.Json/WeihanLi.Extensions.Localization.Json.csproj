@@ -1,9 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="../../build/common.props" />
+  <PropertyGroup>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="WeihanLi.Common" Version="1.0.31" />
+    <None Include="../../README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Version="2.0.0" Include="Microsoft.Extensions.Localization.Abstractions" />
+  <ItemGroup>  
+    <PackageReference Include="WeihanLi.Common" Version="1.0.60" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
+    <PackageReference Version="2.1.0" Include="Microsoft.Extensions.Localization.Abstractions" />
+    <PackageReference Version="6.0.0" Include="System.Text.Json" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net6.0'">
+    <PackageReference Version="6.0.0" Include="Microsoft.Extensions.Localization.Abstractions" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net8.0'">
+    <PackageReference Version="8.0.0" Include="Microsoft.Extensions.Localization.Abstractions" />
   </ItemGroup>
 </Project>
