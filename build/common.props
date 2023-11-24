@@ -3,7 +3,7 @@
   <PropertyGroup>
     <PackageId>WeihanLi.Extensions.Localization.Json</PackageId>
     <Title>WeihanLi.Extensions.Localization.Json</Title>
-    <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net6.0;net8.0</TargetFrameworks>
     <Description>WeihanLi.Extensions.Localization.Json</Description>
     <PackageTags>localization,json</PackageTags>
     <PackageSummary>WeihanLi.Extensions.Localization.Json</PackageSummary>

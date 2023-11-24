@@ -97,7 +97,7 @@ That's it~
 
 Controller 示例：
 
-``` chsarp
+``` csharp
 public class ValuesController : Controller
 {
     private readonly IStringLocalizer<ValuesController> _localizer;
@@ -148,8 +148,9 @@ Razor 视图示例：
 
 ## Samples
 
-- [AspNetCore3.1Sample](https://github.com/WeihanLi/WeihanLi.Extensions.Localization.Json/tree/dev/samples/WeihanLi.Extensions.Localization.Json.Sample)
-- [ActivityReservation](https://github.com/WeihanLi/ActivityReservation)
+- [AspNetCoreSample](https://github.com/WeihanLi/WeihanLi.Extensions.Localization.Json/tree/dev/samples/WeihanLi.Extensions.Localization.Json.Sample)
+- [Reservation](https://github.com/OpenReservation/ReservationServer)
+- [DbTool](https://github.com/WeihanLi/DbTool)
 
 ## Contact
 

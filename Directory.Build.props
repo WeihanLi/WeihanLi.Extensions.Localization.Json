@@ -11,6 +11,7 @@
   
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
 
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/WeihanLi/WeihanLi.Extensions.Localization.Json</RepositoryUrl>
@@ -23,7 +24,4 @@
     <Authors>WeihanLi</Authors>
     <Copyright>Copyright 2019-2023 (c) WeihanLi</Copyright>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
-  </ItemGroup>
 </Project>

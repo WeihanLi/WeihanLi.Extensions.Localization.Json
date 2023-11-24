@@ -99,7 +99,7 @@ just like what you do before:
 
 Controller sample:
 
-``` chsarp
+``` csharp
 public class ValuesController : Controller
 {
     private readonly IStringLocalizer<ValuesController> _localizer;
@@ -150,8 +150,9 @@ Resource file sample:
 
 ## Samples
 
-- [AspNetCore3.1Sample](https://github.com/WeihanLi/WeihanLi.Extensions.Localization.Json/tree/dev/samples/WeihanLi.Extensions.Localization.Json.Sample)
-- [ActivityReservation](https://github.com/WeihanLi/ActivityReservation)
+- [AspNetCoreSample](https://github.com/WeihanLi/WeihanLi.Extensions.Localization.Json/tree/dev/samples/WeihanLi.Extensions.Localization.Json.Sample)
+- [Reservation](https://github.com/OpenReservation/ReservationServer)
+- [DbTool](https://github.com/WeihanLi/DbTool)
 
 ## Contact
 
