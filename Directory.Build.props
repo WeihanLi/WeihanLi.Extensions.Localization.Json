@@ -23,5 +23,6 @@
 
     <Authors>WeihanLi</Authors>
     <Copyright>Copyright 2019-2023 (c) WeihanLi</Copyright>
+    <ContinuousIntegrationBuild Condition="'$(TF_BUILD)' == 'true' or '$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
   </PropertyGroup>
 </Project>
