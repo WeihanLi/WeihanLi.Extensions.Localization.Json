@@ -22,7 +22,7 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
     <Authors>WeihanLi</Authors>
-    <Copyright>Copyright 2019-2025 (c) WeihanLi</Copyright>
+    <Copyright>Copyright 2019-2026 (c) WeihanLi</Copyright>
     <ContinuousIntegrationBuild Condition="'$(TF_BUILD)' == 'true' or '$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
   </PropertyGroup>
 </Project>
